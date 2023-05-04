@@ -1,6 +1,9 @@
 title: Sztandarscy
+subtitle: "Pokoje w Łebie i Domek w Sarbsku"
 repository: lakistech/sztandarscy.pl
 author: Jacek J. Łakis
+
+locale: "pl-PL"
 
 email: elzuniasz@op.pl
 
@@ -10,7 +13,12 @@ description: >-
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://nowa.sztandarscy.pl" # the base hostname & protocol for your site, e.g. http://example.com
 
+teaser: /assets/images/500x300.png
+og_image: /img/sarbsk01.jpg
+
+
 # Build settings
+include: ["_pages"]
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 plugins:
   - jekyll-feed
