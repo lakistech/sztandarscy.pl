@@ -1,11 +1,17 @@
 title: Sztandarscy
+repository: lakistech/sztandarscy.pl
+author: Jacek J. Łakis
+
 email: elzuniasz@op.pl
+
 description: >-
+  Elżbieta i Ireneusz Sztandarscy - 
   Pokoje w Łebie i Domek w Sarbsku
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://nowa.sztandarscy.pl" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
-theme: minima
+remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 plugins:
   - jekyll-feed
+  - jekyll-include-cache

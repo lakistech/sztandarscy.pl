@@ -1,8 +1,8 @@
 ---
 layout: splash
-title:  "Domek w Sarbsku"
-date:   2023-05-04 18:46:41 +0000
-categories: jekyll update
+title: Domek w Sarbsku
+permalink: /sarbsk
+
 gallery:
   - url: /img/sarbsk01.jpg
     image_path: /img/sarbsk01.jpg
