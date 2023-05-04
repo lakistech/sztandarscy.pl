@@ -1,7 +1,7 @@
 ---
 layout: splash
 title: Domek w Sarbsku
-permalink: /sarbsk
+permalink: /sarbsk/
 
 gallery:
   - url: /img/sarbsk01.jpg
@@ -33,3 +33,5 @@ gallery:
 Dla ceniących sobie ciszę i spokój, oferujemy niezależny dom z podwórkiem o powierzchni 1000 metrów kwadratowych, znajdujący się w miejscowości Sarbsk, 8 kilometrów od Łeby.
 
 {% include gallery caption="Domek **w Sarbsku koło Łeby**." %}
+
+Zapraszamy do [kontaktu](/about/).
