@@ -8,7 +8,7 @@ sort_by: title
 
 
 <h1>Elżbieta i Ireneusz Sztandarscy</h1>
-Zapraszamy do skorzystania z oferty noclegów w Łebie i okolicach. Lorem Ipsum tararara fara a la
+Zapraszamy do skorzystania z oferty noclegów w Łebie i okolicach. Mamy do zaoferowania przytulny domek w okolicach Łeby oraz komfortowe pokoje w centrum.
 
 [![Sarbsk](/img/sarbsk_link.png "Domek w Sarbsku")](/sarbsk/)
 <p></p>
