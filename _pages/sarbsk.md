@@ -32,7 +32,7 @@ gallery:
     image_path: /img/Sarbsk2025_05.jpeg
     alt: "Domek w Sarbsku koło Łeby"
     title: "Domek w Sarbsku koło Łeby"
-  - url: /img//img/bs04_kw.jpg
+  - url: /img/Sarbsk2025_04.jpeg
     image_path: /img/Sarbsk2025_04.jpeg
     alt: "Domek w Sarbsku koło Łeby"
     title: "Domek w Sarbsku koło Łeby"
