@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var CMS_URL = 'https://sztandarscy.lakis.pro';
+  var CMS_URL = 'https://cms.sztandarscy.pl';
   var HERO_INTERVAL_MS = 6000;
   var PROPERTY = document.body.getAttribute('data-property') || 'sarbsk';
 
