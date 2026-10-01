@@ -1,0 +1,23 @@
+/* Warm palette for the Łeba rooms page — overrides the base green theme variables. */
+:root {
+  --ink: #2b2013;
+  --ink-rgb: 43, 32, 19;
+  --ink-soft: #6b5c3f;
+  --paper: #fdf8ee;
+  --paper-rgb: 253, 248, 238;
+  --paper-alt: #f5ecd6;
+  --accent: #d9a721;
+  --accent-dark: #a97b12;
+  --line: #ead9b0;
+
+  --hero-grad-1: #6b4f18;
+  --hero-grad-2: #2b2013;
+  --hero-placeholder-1: #8a691f;
+  --hero-placeholder-2: #2b2013;
+  --hero-eyebrow: #f2dfa8;
+  --hero-lead: #f3e8c9;
+  --media-placeholder-1: #f0dca0;
+  --media-placeholder-2: #d1a94a;
+  --contact-text: #e8d8ad;
+  --switch-accent: #566b4d;
+}
