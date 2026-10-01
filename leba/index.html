@@ -17,10 +17,10 @@
   <div class="nav__inner">
     <a href="#top" class="nav__brand"><span data-field="nav_brand">Sztandarscy</span> <span>· <span data-field="nav_subtitle">Pokoje w Łebie</span></span></a>
     <nav class="nav__links">
-      <a href="#o-pokojach">O pokojach</a>
-      <a href="#galeria">Galeria</a>
-      <a href="#okolica">Okolica</a>
-      <a href="#kontakt">Kontakt</a>
+      <a href="#o-pokojach" data-field="nav_link_about">O pokojach</a>
+      <a href="#galeria" data-field="nav_link_gallery">Galeria</a>
+      <a href="#okolica" data-field="nav_link_area">Okolica</a>
+      <a href="#kontakt" data-field="nav_link_contact">Kontakt</a>
     </nav>
     <div class="nav__actions">
       <a href="/" class="btn btn--small btn--switch" data-field="nav_switch_label">Domek w Sarbsku</a>
@@ -76,9 +76,7 @@
     <h2 data-field="gallery_title">Zobacz pokoje</h2>
     <p class="section__intro" data-field="gallery_intro">Zdjęcia pokoi i okolicy — zarządzane na bieżąco przez właścicieli.</p>
     <div class="gallery" id="gallery-grid">
-      <div class="gallery__empty" id="gallery-empty">
-        Zdjęcia pojawią się tutaj wkrótce.
-      </div>
+      <div class="gallery__empty" id="gallery-empty" data-field="gallery_empty">Zdjęcia pojawią się tutaj wkrótce.</div>
     </div>
   </div>
 </section>
@@ -116,15 +114,15 @@
       <p data-field="contact_intro">Chętnie odpowiemy na wszystkie pytania o dostępne terminy, warunki wynajmu i cenę pobytu.</p>
       <dl class="contact-list">
         <div>
-          <dt>Telefon</dt>
+          <dt data-field="contact_label_phone">Telefon</dt>
           <dd><a href="tel:+48600597171" data-tel-link data-field="contact_phone">+48 600 597 171</a></dd>
         </div>
         <div>
-          <dt>E-mail</dt>
+          <dt data-field="contact_label_email">E-mail</dt>
           <dd><a href="mailto:elzuniasz@op.pl" data-email-link data-field="contact_email">elzuniasz@op.pl</a></dd>
         </div>
         <div>
-          <dt>Adres</dt>
+          <dt data-field="contact_label_address">Adres</dt>
           <dd data-field="contact_address">ul. Powstańców Warszawy 12/2, 84-360 Łeba</dd>
         </div>
       </dl>
@@ -164,6 +162,6 @@
   <button class="lightbox__nav lightbox__nav--next" id="lightbox-next" aria-label="Następne zdjęcie">&#8250;</button>
 </div>
 
-<script src="/js/main.js?v=0cdb19e9"></script>
+<script src="/js/main.js?v=eecb4e61"></script>
 </body>
 </html>

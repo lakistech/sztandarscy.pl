@@ -1,24 +1,16 @@
 (function () {
   'use strict';
 
-  var STRAPI_URL = 'https://strapi.lakis.pro';
+  var CMS_URL = 'https://sztandarscy.lakis.pro';
   var HERO_INTERVAL_MS = 6000;
   var PROPERTY = document.body.getAttribute('data-property') || 'sarbsk';
-  var ENDPOINT = PROPERTY === 'leba' ? 'photo-lebas' : 'photo-sarbsks';
-  var PAGE_ENDPOINT = PROPERTY === 'leba' ? 'page-leba' : 'page-sarbsk';
 
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  function absoluteUrl(url) {
-    if (!url) return null;
-    if (/^https?:\/\//i.test(url)) return url;
-    return STRAPI_URL + url;
-  }
 
   function fetchWithRetry(url, attemptsLeft) {
     return fetch(url, { cache: 'no-store' })
       .then(function (res) {
-        if (!res.ok) throw new Error('Strapi request failed: ' + res.status);
+        if (!res.ok) throw new Error('CMS request failed: ' + res.status);
         return res.json();
       })
       .catch(function (err) {
@@ -33,71 +25,36 @@
       });
   }
 
-  function fetchPhotos(section) {
-    var url = STRAPI_URL + '/api/' + ENDPOINT + '?populate=image&sort=order:asc'
-      + '&filters[section][$eq]=' + encodeURIComponent(section);
-    return fetchWithRetry(url, 2)
-      .then(function (json) {
-        return (json.data || []).map(function (item) {
-          var img = item.image;
-          var fmt = img && img.formats && img.formats.large ? img.formats.large : img;
-          return {
-            url: absoluteUrl(fmt && fmt.url),
-            alt: item.title || 'Sztandarscy',
-          };
-        }).filter(function (p) { return !!p.url; });
-      })
-      .catch(function (err) {
-        console.warn('Nie udalo sie pobrac zdjec z Strapi:', err);
-        return [];
-      });
+  function fetchContent() {
+    return fetchWithRetry(CMS_URL + '/api/' + PROPERTY, 2).catch(function (err) {
+      console.warn('Nie udalo sie pobrac tresci z CMS:', err);
+      return null;
+    });
   }
 
-  var TEXT_FIELDS = [
-    'nav_brand', 'nav_subtitle', 'nav_switch_label', 'nav_cta_label',
-    'hero_eyebrow', 'hero_title', 'hero_lead', 'hero_cta_primary', 'hero_cta_secondary',
-    'about_eyebrow', 'about_title', 'about_paragraph_1', 'about_paragraph_2',
-    'gallery_eyebrow', 'gallery_title', 'gallery_intro',
-    'area_eyebrow', 'area_title',
-    'contact_eyebrow', 'contact_title', 'contact_intro',
-    'contact_phone', 'contact_email', 'contact_address',
-    'contact_card_name', 'contact_card_text', 'contact_card_button',
-    'crosslink_title', 'crosslink_text', 'crosslink_button',
-    'footer_text'
-  ];
+  function applyTexts(content) {
+    var texts = content.texts || {};
 
-  function fetchPageContent() {
-    var url = STRAPI_URL + '/api/' + PAGE_ENDPOINT + '?populate=*';
-    return fetchWithRetry(url, 2)
-      .then(function (json) { return json.data; })
-      .catch(function (err) {
-        console.warn('Nie udalo sie pobrac tresci strony:', err);
-        return null;
-      });
-  }
-
-  function applyPageContent(content) {
-    if (!content) return;
-
-    if (content.seo_title) document.title = content.seo_title;
-    if (content.seo_description) {
+    if (texts.seo_title) document.title = texts.seo_title;
+    if (texts.seo_description) {
       var meta = document.querySelector('meta[name="description"]');
-      if (meta) meta.setAttribute('content', content.seo_description);
+      if (meta) meta.setAttribute('content', texts.seo_description);
     }
 
-    TEXT_FIELDS.forEach(function (name) {
-      var value = content[name];
-      if (value === undefined || value === null || value === '') return;
-      var el = document.querySelector('[data-field="' + name + '"]');
-      if (el) el.textContent = value;
+    Object.keys(texts).forEach(function (name) {
+      var value = texts[name];
+      if (!value) return;
+      document.querySelectorAll('[data-field="' + name + '"]').forEach(function (el) {
+        el.textContent = value;
+      });
     });
 
-    if (content.contact_phone) {
-      var telHref = 'tel:' + content.contact_phone.replace(/\s+/g, '');
+    if (texts.contact_phone) {
+      var telHref = 'tel:' + texts.contact_phone.replace(/[^+0-9]/g, '');
       document.querySelectorAll('a[data-tel-link]').forEach(function (a) { a.href = telHref; });
     }
-    if (content.contact_email) {
-      var mailHref = 'mailto:' + content.contact_email;
+    if (texts.contact_email) {
+      var mailHref = 'mailto:' + texts.contact_email;
       document.querySelectorAll('a[data-email-link]').forEach(function (a) { a.href = mailHref; });
     }
 
@@ -105,9 +62,9 @@
       var list = document.querySelector('[data-field-list="about_features"]');
       if (list) {
         list.innerHTML = '';
-        content.about_features.forEach(function (item) {
+        content.about_features.forEach(function (text) {
           var li = document.createElement('li');
-          li.textContent = item.text;
+          li.textContent = text;
           list.appendChild(li);
         });
       }
@@ -132,9 +89,18 @@
     }
   }
 
+  function initAboutPhoto(photo) {
+    if (!photo) return;
+    var frame = document.getElementById('hero-photo-frame');
+    var img = document.createElement('img');
+    img.src = photo.url;
+    img.alt = photo.alt;
+    frame.innerHTML = '';
+    frame.appendChild(img);
+  }
+
   function initHero(photos) {
     var container = document.getElementById('hero-slides');
-    var frame = document.getElementById('hero-photo-frame');
     if (!photos.length) return;
 
     container.innerHTML = '';
@@ -144,8 +110,6 @@
       div.style.backgroundImage = 'url(' + photo.url + ')';
       container.appendChild(div);
     });
-
-    frame.innerHTML = '<img src="' + photos[0].url + '" alt="' + photos[0].alt + '">';
 
     if (photos.length > 1) {
       var current = 0;
@@ -172,7 +136,7 @@
       var item = document.createElement('div');
       item.className = 'gallery__item';
       var img = document.createElement('img');
-      img.src = photo.url;
+      img.src = photo.thumb || photo.url;
       img.alt = photo.alt;
       img.loading = 'lazy';
       item.appendChild(img);
@@ -239,9 +203,11 @@
     }, { passive: true });
   })();
 
-  Promise.all([fetchPhotos('hero'), fetchPhotos('galeria'), fetchPageContent()]).then(function (results) {
-    initHero(results[0]);
-    initGallery(results[1]);
-    applyPageContent(results[2]);
+  fetchContent().then(function (content) {
+    if (!content) return;
+    initHero(content.bg || []);
+    initAboutPhoto(content.about);
+    initGallery(content.gallery || []);
+    applyTexts(content);
   });
 })();
